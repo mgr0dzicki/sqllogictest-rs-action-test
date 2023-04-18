@@ -61,16 +61,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - uses: obi1kenobi/cargo-semver-checks-action@main
         with:
-          profile: minimal
-          toolchain: stable
-      - name: Install semver-checks
-        uses: actions-rs/cargo@v1
+          package: sqllogictest
+          rust-toolchain: stable
+      - uses: obi1kenobi/cargo-semver-checks-action@main
         with:
-          command: install
-          args: cargo-semver-checks --version ^0.17 --locked
-      - name: Check semver
-        run: |
-         cargo semver-checks check-release -p sqllogictest
-         cargo semver-checks check-release -p sqllogictest-engines
+          package: sqllogictest-engines
+          prefix-key: engines
+          rust-toolchain: stable
